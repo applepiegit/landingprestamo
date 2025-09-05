@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.faq-item[open] .faq-content {
+  max-height: 1000px;
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+}
+
+.faq-content {
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.faq-arrow {
+  transition: transform 0.3s ease;
+}
+
+.faq-item[open] .faq-arrow {
+  transform: rotate(180deg);
+}
+

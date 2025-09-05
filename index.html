@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/icon.png" />
+  <title>womenssavingsclub</title>
+  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/carousel.js"></script>
+  <script type="module" src="/src/questions.js"></script>
+  <script type="module" src="/src/questionsD.js"></script>
+  <link href="/src/style.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #e91e63;
+      --header-bg: #fbd0cc;
+      --footer-bg: #292325;
+    }
+
+    /* Aplicar color primario a elementos comunes */
+    .question-btn,
+    .question-btn-2 {
+      background-color: var(--primary-color) !important;
+    }
+
+    .question-btn:hover,
+    .question-btn-2:hover {
+      opacity: 0.9;
+    }
+
+    svg[class*="text-pink-500"] {
+      color: var(--primary-color) !important;
+    }
+
+    .progress-bar-fill,
+    .progress-bar-fill-2 {
+      background-color: var(--primary-color) !important;
+    }
+
+    [class*="bg-pink-"] {
+      background-color: var(--primary-color) !important;
+    }
+
+    .carousel-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-wrapper {
+      display: flex;
+      gap: 2rem;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .testimonial-slide {
+      flex: 0 0 300px;
+      min-width: 300px;
+    }
+
+    /* Estilos para el cuestionario */
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: #f3f4f6;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background-color: var(--primary-color);
+      transition: width 0.5s ease-in-out;
+    }
+
+    .question-container {
+      display: none;
+    }
+
+    .question-container.active {
+      display: block;
+    }
+
+    .final-message {
+      display: none;
+    }
+
+    .final-message.active {
+      display: block;
+    }
+
+    /* Estilos para el segundo cuestionario */
+    .progress-bar-2 {
+      width: 100%;
+      height: 8px;
+      background-color: #f3f4f6;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill-2 {
+      height: 100%;
+      background-color: #ec4899;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .question-container-2 {
+      display: none;
+    }
+
+    .question-container-2.active {
+      display: block;
+    }
+
+
+
+    .final-message-2 {
+      display: none;
+    }
+
+    .final-message-2.active {
+      display: block;
+    }
+
+    #questions2 {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header style="background-color: var(--header-bg);" class="fixed top-0 left-0 right-0 z-50 pb-4 md:pb-8 mb-14">
+    <div class="max-w-6xl mx-auto px-4 pt-3 md:pb-8">
+      <!-- Desktop Layout -->
+      <div class="hidden md:flex justify-between items-center">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <img src="/logo.png" alt="Women's Saving Club" class="h-12">
+        </div>
+
+        <!-- Phone Number -->
+        <div class="flex items-center">
+          <a href="tel:(888) 888-8888"
+            class="bg-pink-500 text-white px-8 py-3 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors">
+            <span class="flex items-center">
+              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              (888) 888-8888
+            </span>
+          </a>
+        </div>
+
+        <!-- Ashley Message -->
+        <div class="flex items-center text-gray-800">
+          <span class="text-center font-bold text-lg">
+            Ashley, your savings<br />
+            specialist is live until 20:00:00
+          </span>
+        </div>
+      </div>
+
+      <!-- Mobile Layout -->
+      <div class="md:hidden space-y-4">
+        <div class="flex justify-between items-center">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <img src="/logo.png" alt="Women's Saving Club" class="h-10">
+          </div>
+
+          <!-- Phone Number -->
+          <div class="flex items-center">
+            <a href="tel:(888) 888-8888"
+              class="bg-pink-500 text-white px-4 py-2 rounded-lg font-bold text-base hover:bg-pink-600 transition-colors">
+              <span class="flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                (888) 888-8888
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Ashley Message -->
+        <div class="flex justify-end">
+          <span class="text-right font-bold text-base">
+            <div class="inline-flex items-center">
+              <div class="w-2 h-2 bg-green-500 rounded-full mr-1 animate-pulse"></div>
+              Ashley
+            </div>, your savings<br />
+            specialist is live until 20:00:00
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ashley Photo (Centered and Overlapping) -->
+    <div class="flex items-center absolute left-8 top-20 md:top-auto md:right-[50%] md:left-auto md:-bottom-7">
+      <div class="relative">
+        <img src="/header/call-service.png" alt="Ashley" class="w-16 h-16 md:w-16 md:h-16">
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-44 md:pt-52">
+    <!-- Hero Section -->
+    <div class="max-w-6xl mx-auto px-4">
+      <section class="text-center mb-12">
+        <h1 class="text-3xl font-bold mb-4">
+          Women With 10k+ in Credit Card Debt Can Qualify<br />
+          For This Debt Reduction Program
+        </h1>
+        <p class="text-xl font-semibold mb-14">
+          🔥 54,433 Women Called And Are Now Debt Free
+        </p>
+
+        <!-- Question Section -->
+        <div class="mb-8">
+          <div class="relative mb-4">
+            <!-- Go Back Button -->
+            <div id="goBackContainer" class="hidden absolute right-0 -top-12 z-10">
+              <button
+                class="go-back-btn border border-gray-300 rounded px-4 py-2 text-gray-500 hover:text-gray-700 font-semibold transition-colors">
+                Go Back
+              </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+              <div class="progress-bar-fill" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Questions -->
+          <div id="questions">
+            <div class="question-container active" data-question="1">
+              <h2 class="text-2xl font-bold mb-6">Do you live in the United States?</h2>
+              <div class="space-y-4 mb-8">
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn"
+                  data-answer="yes">
+                  Yes
+                </button>
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn"
+                  data-answer="no">
+                  No
+                </button>
+              </div>
+            </div>
+
+            <div class="question-container" data-question="2">
+              <h2 class="text-2xl font-bold mb-6">Do you have $10,000+ in credit card debt?</h2>
+              <div class="space-y-4 mb-8">
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn"
+                  data-answer="yes">
+                  Yes
+                </button>
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn"
+                  data-answer="no">
+                  No
+                </button>
+              </div>
+            </div>
+
+            <div class="question-container" data-question="3">
+              <h2 class="text-2xl font-bold mb-6">Are you making minimum payments?</h2>
+              <div class="space-y-4 mb-8">
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn"
+                  data-answer="yes">
+                  Yes
+                </button>
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn"
+                  data-answer="no">
+                  No
+                </button>
+              </div>
+            </div>
+
+            <!-- Go Back Button -->
+            <div id="goBackContainer" class="hidden absolute right-0 mt-4">
+              <button
+                class="go-back-btn border border-gray-300 rounded px-4 py-2 text-gray-500 hover:text-gray-700 font-semibold transition-colors">
+                Go Back
+              </button>
+            </div>
+          </div>
+
+          <!-- Review Message -->
+          <div class="review-message mb-8 hidden">
+            <h2 class="text-2xl font-bold mb-4">Reviewing your answers</h2>
+            <div class="flex justify-center">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+            </div>
+          </div>
+
+          <!-- Final Message -->
+          <div class="final-message mb-8">
+            <h2 class="text-4xl font-bold mb-8">Great News!</h2>
+            <p class="text-xl mb-6">You've Been Pre-Approved for a Financial Hardship Program!</p>
+            <a href="tel:(888) 888-8888"
+              class="inline-block bg-pink-500 text-white px-8 py-4 rounded-lg font-bold text-2xl hover:bg-pink-600 transition-colors mb-6">
+              (888) 888-8888
+            </a>
+            <p class="text-lg mb-6">
+              Act fast! Your pre-approval expires in
+              <span class="font-bold text-red-500" id="timer">03:00</span>
+            </p>
+          </div>
+
+          <!-- Benefits List -->
+          <div class="text-left space-y-4">
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span class="font-semibold">Reduce 10k+ of Credit Card Debt</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span class="font-semibold">Cut monthly payments up to 60%, Saving $100s/Month</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span class="font-semibold">Get Interest on ALL cards down to 0%</span>
+            </div>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+              <span class="font-semibold">Put $1000s Back In Your Pocket</span>
+            </div>
+          </div>
+
+          <!-- Ratings Section -->
+          <div class="mt-8">
+            <div class="text-center mb-4">
+              <span class="text-gray-800 font-semibold">Consumer Ratings</span>
+              <span class="font-bold ml-2">4.8</span>
+              <span class="text-yellow-400 ml-2">★★★★★</span>
+              <span class="text-gray-600 ml-2">2,705</span>
+            </div>
+            <div class="flex justify-center items-center space-x-6">
+              <img src="/cta/A.png" alt="BBB A+ Rating" class="h-12">
+              <img src="/cta/top.svg" alt="Top Consumer Reviews" class="h-12">
+              <img src="/cta/Trustpilot-Stars.png" alt="Trustpilot Rating" class="h-12">
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="bg-[#f9f9f9] mb-12">
+      <div class="max-w-6xl mx-auto px-4">
+        <section class="py-12">
+          <h2 class="text-3xl font-bold text-center mb-12">Here's a few of the thousands of women the program has helped
+          </h2>
+          <!-- Carousel Container -->
+          <div class="carousel-container">
+            <div class="testimonial-wrapper">
+              <!-- Testimonial 1 -->
+              <div class="testimonial-slide px-4">
+                <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                  <img src="/testimonials/FayeN.png" alt="Faye N." class="w-full h-48 object-cover rounded-lg mb-4">
+                  <div class="text-center">
+                    <h3 class="font-bold text-xl mb-1">Faye N.</h3>
+                    <p class="text-[#00b67a] font-medium mb-2">Verified Caller</p>
+                    <div class="flex justify-center text-[#00b67a] mb-4">★★★★★</div>
+                  </div>
+                  <p class="text-gray-700 mb-4">"It only took 15 minutes on the phone"</p>
+                  <p class="text-gray-600 text-sm">"Anyone who has a credit card needs to call, it's the easiest process
+                    and my only regret is not doing this sooner. It helped me get out from a state of financial anxiety
+                    to a place of calm. I would recommend this service to other people who find themselves financially
+                    upside down."</p>
+                </div>
+              </div>
+
+              <!-- Testimonial 2 -->
+              <div class="testimonial-slide px-4">
+                <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                  <img src="/testimonials/KarenH.jpg" alt="Karen H." class="w-full h-48 object-cover rounded-lg mb-4">
+                  <div class="text-center">
+                    <h3 class="font-bold text-xl mb-1">Karen H.</h3>
+                    <p class="text-[#00b67a] font-medium mb-2">Verified Caller</p>
+                    <div class="flex justify-center text-[#00b67a] mb-4">★★★★★</div>
+                  </div>
+                  <p class="text-gray-700 mb-4">"This program saved my marriage from financial ruin"</p>
+                  <p class="text-gray-600 text-sm">"My husband and I are debt free because of this program. We spoke to
+                    James and he helped us with the entire process, explained everything and saved us over $15,000!
+                    Highly recommend if you are serious about getting debt free"</p>
+                </div>
+              </div>
+
+              <!-- Testimonial 3 -->
+              <div class="testimonial-slide px-4">
+                <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                  <img src="/testimonials/MariaK.jpeg" alt="Maria K." class="w-full h-48 object-cover rounded-lg mb-4">
+                  <div class="text-center">
+                    <h3 class="font-bold text-xl mb-1">Maria K.</h3>
+                    <p class="text-[#00b67a] font-medium mb-2">Verified Caller</p>
+                    <div class="flex justify-center text-[#00b67a] mb-4">★★★★★</div>
+                  </div>
+                  <p class="text-gray-700 mb-4">"I'm stress free and forever grateful I found this"</p>
+                  <p class="text-gray-600 text-sm">"Debt was taking a toll on my mental health. I had 3 credit cards
+                    mostly from bad financial decisions and they helped me eliminate my debt which is saving me over
+                    $800 a month now."</p>
+                </div>
+              </div>
+
+              <!-- Testimonial 4 -->
+              <div class="testimonial-slide px-4">
+                <div class="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                  <img src="/testimonials/RachelF.jpeg" alt="Rachel F."
+                    class="w-full h-48 object-cover rounded-lg mb-4">
+                  <h3 class="font-bold text-xl mb-1">Rachel F.</h3>
+                  <p class="text-[#00b67a] font-medium mb-2">Verified Caller</p>
+                  <div class="flex text-[#00b67a] mb-4">★★★★★</div>
+                  <p class="text-gray-700 mb-4">"I finally could afford my first vacation"</p>
+                  <p class="text-gray-600 text-sm">"I wish I knew about this sooner, I'm going to be able to buy my
+                    first home because this program solved my biggest financial problems with my credit cards. I'm glad
+                    there is someone who seemed to genuinely helped me in my debts."</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carousel Navigation Dots -->
+            <div class="flex justify-center mt-6 space-x-2">
+              <button class="carousel-dot w-2 h-2 rounded-full bg-gray-900"></button>
+              <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300"></button>
+              <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300"></button>
+              <button class="carousel-dot w-2 h-2 rounded-full bg-gray-300"></button>
+            </div>
+          </div>
+      </div>
+      </section>
+    </div>
+
+    <!-- How it Works -->
+    <div class="max-w-6xl mx-auto px-4">
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-center mb-8">How It Works</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="flex flex-col items-center text-center">
+            <span style="background-color: var(--primary-color);"
+              class="text-white rounded-full w-12 h-12 flex items-center justify-center mb-4 text-xl">1</span>
+            <span>Complete the quick<br>2-step form</span>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <span
+              class="bg-pink-500 text-white rounded-full w-12 h-12 flex items-center justify-center mb-4 text-xl">2</span>
+            <span>Call the number provided<br>if you qualify</span>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <span
+              class="bg-pink-500 text-white rounded-full w-12 h-12 flex items-center justify-center mb-4 text-xl">3</span>
+            <span>Find out how much of your<br>debt can be eliminated</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="bg-[#f9f9f9] py-12 md:py-16">
+      <div class="max-w-4xl mx-auto px-4">
+        <h2 class="text-2xl font-bold text-center mb-8">FAQ's</h2>
+
+
+        <div class="space-y-4">
+          <!-- FAQ Items -->
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Can I really reduce my payments by 60%?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>Yes, we've already helped 145,769 people save hundreds per month. We use an AI algorithm to reduce your
+                debt by the most amount possible</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Why would they be ok reducing my debt?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>Because they know that if you file bankruptcy, they may get nothing at all. Due to the possibility of
+                taking a loss, creditors are ok restructuring how much you owe, especially once they recognize the
+                financial hardships you are facing. In other words, your creditors would rather accept some v.s nothing
+                at all</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">How quickly can I get my debt reduced?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>The timeline for reducing your debt can vary depending on the complexity of your situation and how
+                quickly you enroll into the program. You will see a reduction in your monthly payments by up to 60%
+                immediately, which saves most of our customers $100s a month and gives them some breathing room to
+                manage their finances. The full process typically takes 12 to 36 months (compared to 20-30+ years it
+                would take on your own). The program works diligently to negotiate the best terms possible as quickly as
+                they can, so you can start seeing relief sooner.</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Will this affect my credit score?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>Enrolling in a debt relief program may have a temporary impact on your credit score, as you are
+                negotiating with creditors to reduce your debt. However, having large amounts of debt already makes it
+                difficult to get approved for loans or other forms of credit. As your debt is reduced and paid off, your
+                overall financial health improves, which can eventually lead to a better credit score. Many participants
+                find that being debt-free not only relieves stress but also improves their chances of securing loans in
+                the future.</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Are there hidden fees?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>No, there are absolutely no hidden fees. The program is upfront and transparent about any costs
+                associated with the program. Their goal is to help you save money and eliminate debt, not add more to
+                your financial burden. You'll know exactly what to expect from day one, with no surprises along the way.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">What types of debt are covered by this program?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>This program is designed to help with unsecured debts, such as credit card debt, personal loans, and
+                medical bills. However, it does not cover secured debts, like mortgages or auto loans. Our team can help
+                you determine whether your specific debt qualifies for the program.</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Is this program available in every state?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>Our program is available in 49 out of 50 states. (Oregon is the only state we don't work with).</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Do I need to be up to date on my payments?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>In most cases, yes, you need to be current on your credit card or loan payments to qualify for the
+                program. Being up-to-date on payments shows creditors that you are committed to managing your debt,
+                which can make negotiations more favorable. However, if you've fallen behind, we can still discuss
+                options that may be available to help you get back on track.</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">How much debt do I need to enroll in the program?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>The program requires you to have at least <strong>$15,000 in unsecured debt</strong> (such as credit
+                card debt, medical bills, or personal loans) to qualify. In fact, the more debt you have, the more the
+                program can save you. Larger debts often mean greater opportunities for negotiation, which can lead to
+                deeper reductions in both your monthly payments and the total amount owed. If you have less than $15,000
+                in unsecured debt, there are certain circumstances where you can still enroll so we recommend still
+                giving a phone call to see if they can help you.</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Will I be able to use my credit cards?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>No, your enrolled cards will be rendered inactive. We do recommend, however, that you set aside one
+                card to be used for any emergency situations that might arise. This card ideally should have an
+                available balance.</p>
+            </div>
+          </details>
+
+          <details class="faq-item bg-white rounded-lg shadow-md">
+            <summary class="flex justify-between items-center p-4 cursor-pointer">
+              <h3 class="text-lg font-semibold">Am I a good a fit for the program?</h3>
+              <svg class="faq-arrow w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-content px-4 pb-4">
+              <p>The ideal candidate is someone facing financial hardship, making minimum payments on credit card debt
+                with little progress in reducing the balance. They're looking to lower their monthly payments and pay
+                off their debt quickly, rather than over decades of minimum payments.</p>
+            </div>
+          </details>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="text-center mt-12 space-y-4">
+          <p class="text-xl">The program has helped remove <strong>$200,679,432</strong> in credit card debt & counting.
+          </p>
+          <p class="text-lg">Want your debt gone next? Fill out the form below to get started!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4">
+      <section class="text-center mb-12">
+        <h1 class="text-3xl font-bold mb-4">
+          Women With 10k+ in Credit Card Debt Can Qualify<br />
+          For This Debt Reduction Program
+        </h1>
+        <p class="text-xl font-semibold mb-14">
+          🔥 54,433 Women Called And Are Now Debt Free
+        </p>
+
+        <!-- Question Section -->
+        <div class="mb-8">
+          <div class="relative mb-4">
+            <!-- Go Back Button (único) -->
+            <div id="goBackContainer2" class="hidden absolute right-0 -top-12 z-10">
+              <button
+                class="go-back-btn-2 border border-gray-300 rounded px-4 py-2 text-gray-500 hover:text-gray-700 font-semibold transition-colors">
+                Go Back
+              </button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar-2">
+              <div class="progress-bar-fill-2" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Questions -->
+          <div id="questions2">
+            <div class="question-container-2 active" data-question2="1">
+              <h2 class="text-2xl font-bold mb-6">Do you live in the United States?</h2>
+              <div class="space-y-4 mb-8">
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn-2"
+                  data-answer="yes">
+                  Yes
+                </button>
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn-2"
+                  data-answer="no">
+                  No
+                </button>
+              </div>
+            </div>
+
+            <div class="question-container-2" data-question2="2">
+              <h2 class="text-2xl font-bold mb-6">Do you have $10,000+ in credit card debt?</h2>
+              <div class="space-y-4 mb-8">
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn-2"
+                  data-answer="yes">
+                  Yes
+                </button>
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn-2"
+                  data-answer="no">
+                  No
+                </button>
+              </div>
+            </div>
+
+            <div class="question-container-2" data-question2="3">
+              <h2 class="text-2xl font-bold mb-6">Are you making minimum payments?</h2>
+              <div class="space-y-4 mb-8">
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn-2"
+                  data-answer="yes">
+                  Yes
+                </button>
+                <button
+                  class="w-full bg-pink-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-pink-600 transition-colors question-btn-2"
+                  data-answer="no">
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review Message -->
+        <div class="review-message-2 mb-8 hidden">
+          <h2 class="text-2xl font-bold mb-4">Reviewing your answers</h2>
+          <div class="flex justify-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div>
+          </div>
+        </div>
+
+        <!-- Final Message -->
+        <div class="final-message-2 mb-8">
+          <h2 class="text-4xl font-bold mb-8">Great News!</h2>
+          <p class="text-xl mb-6">You've Been Pre-Approved for a Financial Hardship Program!</p>
+          <a href="tel:(888) 888-8888"
+            class="inline-block bg-pink-500 text-white px-8 py-4 rounded-lg font-bold text-2xl hover:bg-pink-600 transition-colors mb-6">
+            (888) 888-8888
+          </a>
+          <p class="text-lg mb-6">
+            Act fast! Your pre-approval expires in
+            <span class="font-bold text-red-500" id="timer2">03:00</span>
+          </p>
+        </div>
+
+        <!-- Benefits List -->
+        <div class="text-left space-y-4">
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <span class="font-semibold">Reduce 10k+ of Credit Card Debt</span>
+          </div>
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <span class="font-semibold">Cut monthly payments up to 60%, Saving $100s/Month</span>
+          </div>
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <span class="font-semibold">Get Interest on ALL cards down to 0%</span>
+          </div>
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-pink-500 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <span class="font-semibold">Put $1000s Back In Your Pocket</span>
+          </div>
+        </div>
+
+        <!-- Ratings Section -->
+        <div class="mt-8">
+          <div class="text-center mb-4">
+            <span class="text-gray-800 font-semibold">Consumer Ratings</span>
+            <span class="font-bold ml-2">4.8</span>
+            <span class="text-yellow-400 ml-2">★★★★★</span>
+            <span class="text-gray-600 ml-2">2,705</span>
+          </div>
+          <div class="flex justify-center items-center space-x-6">
+            <img src="/cta/A.png" alt="BBB A+ Rating" class="h-12">
+            <img src="/cta/top.svg" alt="Top Consumer Reviews" class="h-12">
+            <img src="/cta/Trustpilot-Stars.png" alt="Trustpilot Rating" class="h-12">
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+  </main>
+
+  <!-- Footer -->
+  <footer style="background-color: var(--footer-bg);" class="text-white text-xs py-8 mt-12">
+    <div class="container mx-auto px-4 md:px-8 lg:px-24 xl:px-48">
+      <div class="max-w-[1000px] mx-auto">
+        <div class="space-y-6">
+          <p class="text-[11px] leading-relaxed">Please note that all calls with the company may be recorded or
+            monitored for quality assurance and training purposes. *Clients who are able to stay with the program and
+            get all their debt settled realize approximate savings of 43% before fees, or 25% including our fees, over
+            24 to 48 months. All claims are based on enrolled debts. Not all debts are eligible for enrollment. Not all
+            clients complete our program for various reasons, including their ability to save sufficient funds.
+            Estimates based on prior results, which will vary based on specific circumstances. We do not guarantee that
+            your debts will be lowered by a specific amount or percentage or that you will be debt-free within a
+            specific period of time. We do not assume consumer debt, make monthly payments to creditors or provide tax,
+            bankruptcy, accounting or legal advice or credit repair services. Not available in all states. Please
+            contact a tax professional to discuss tax consequences of settlement. Please consult with a bankruptcy
+            attorney for more information on bankruptcy. Depending on your state, we may be available to recommend a
+            local tax professional and/or bankruptcy attorney. Read and understand all program materials prior to
+            enrollment, including potential adverse impact on credit rating. Partners may perform a credit check to
+            determine your eligibility</p>
+
+          <p class="text-[11px] leading-relaxed">By clicking "submit" you consent to be contacted via SMS, phone, or
+            email using automated technology by partners of our company. Message frequency may vary. Reply "STOP" to
+            opt-out or "HELP" for assistance. Message and data rates may apply. No purchase necessary.</p>
+
+          <p class="text-[11px] leading-relaxed">By calling the phone number you consent to be contacted via SMS, phone,
+            or email using automated technology by US Funding Direct if there was a disconnection. Message frequency may
+            vary. Reply "STOP" to opt-out or "HELP" for assistance. Message and data rates may apply. No purchase
+            necessary.</p>
+
+          <p class="text-center"><a href="#" class="text-white underline hover:text-gray-300">Privacy Policy</a> | <a
+              href="#" class="text-white underline hover:text-gray-300">Terms of Service</a></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
